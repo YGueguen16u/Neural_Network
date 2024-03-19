@@ -1,229 +1,6 @@
 import numpy as np
 import copy 
-<<<<<<< HEAD
-from activation import ActivationFunctions, BackwardActivation
-=======
-
-# ------------------------------------------------------------------------------
-# Main activation function
-# ------------------------------------------------------------------------------
-
-class ActivationFunctions:
-    """
-    staticmethod
-        - If these methods do not depend on instance attributes
-        - Clarifies that these methods can be called on the class itself, without needing to instantiate an object
-    """
-    @staticmethod
-    def linear(Z):
-        """
-        Linear activation
-    
-        Parameters
-        ----------
-        Z : numpy array of any shape
-        
-        Returns
-        -------
-        A : output of linear(z), same shape as Z
-        cache : returns Z (for backpropagation)
-        """
-        
-        A = Z
-        assert(A.shape == Z.shape)
-        
-        cache = Z
-        
-        return A, cache
-    @staticmethod
-    def sigmoid(Z):
-        """
-        Sigmoid activation
-    
-        Parameters
-        ----------
-        Z : numpy array of any shape
-        
-        Returns
-        -------
-        A : output of sigmoid(z), same shape as Z
-        cache : returns Z (for backpropagation)
-        """
-        
-        A = 1/(1+np.exp(-Z))
-        assert(A.shape == Z.shape)
-        
-        cache = Z
-        
-        return A, cache
-    @staticmethod
-    def relu(Z):
-        """
-        Relu function
-        
-        Parameters
-        ----------
-        Z : Output of the linear layer, of any shape
-      
-        Returns
-        -------
-        A : Post-activation parameter, of the same shape as Z
-        cache : a python dictionary containing "Z" (for backpropagation)
-    
-        """
-        A = np.maximum(0, Z)
-        assert(A.shape == Z.shape)
-        
-        cache = Z
-        
-        return A, cache
-    @staticmethod
-    def tanh(Z):
-        """
-        Tanh activation
-        
-        Parameters
-        ----------
-        Z : Output of the linear layer, of any shape
-    
-        Returns
-        -------
-        A : Post-activation parameter, of the same shape as Z
-        cache : a python dictionary containing "Z" (for backpropagation)
-    
-        """
-        A = np.tanh(Z)
-        assert(A.shape == Z.shape)
-        
-        cache = Z
-        
-        return A, cache
-    
-    @staticmethod
-    def softmax(Z):
-        """
-        Softmax activation
-        
-        Parameters
-        ----------
-        Z : Output of the linear layer, numpy array of any shape
-        
-        Returns
-        -------
-        A : Post-activation parameter, of the same shape as Z
-        cache : a python dictionary containing "Z" (for backpropagation)
-        """
-        expZ = np.exp(Z - np.max(Z, axis=0, keepdims=True))  # Stabilize softmax by subtracting max from Z
-        A = expZ / np.sum(expZ, axis=0, keepdims=True)
-        assert(A.shape == Z.shape)
-        
-        cache = Z
-        return A, cache
-
-# ------------------------------------------------------------------------------
-# Main Backward Activation
-# ------------------------------------------------------------------------------
-
-class BackwardActivation:
-    """
-    The BackwardActivation class provides static methods for implementing 
-    backward propagation steps for different activation functions used in neural networks. 
-    """
-    @staticmethod
-    def linear_activation_backward(dA, cache):
-        """
-        Backward propagation for a single LINEAR unit.
-        
-        Parameters
-        ----------
-        dA : post-activation gradient, of any shape
-        cache : 'Z' (for backpropagation)
-    
-        Returns
-        -------
-        dZ : Gradient of the cost with respect to Z
-        """
-        
-        Z = cache
-        dZ = np.array(dA, copy=True) # just converting dz to a correct object.
-        print("dZ shape:", dZ.shape)
-        print("Z shape:", Z.shape)
-        
-        assert (dZ.shape == Z.shape)
-        
-        return dZ
-    
-    @staticmethod  
-    def sigmoid_backward(dA, cache):
-        """
-        Backward propagation for a single SIGMOID unit.
-    
-        Parameters
-        ----------
-        dA : post-activation gradient, of any shape
-        cache : 'Z' (for backpropagation)
-    
-        Returns
-        -------
-        dZ : Gradient of the cost with respect to Z
-        """
-        
-        Z = cache
-        
-        s = 1/(1+np.exp(-Z))
-        dZ = dA * s * (1-s)
-        
-        assert (dZ.shape == Z.shape)
-        
-        return dZ
-    
-    @staticmethod
-    def relu_backward(dA, cache):
-        """
-        Backward propagation for a single RELU unit.
-    
-        Parameters
-        ----------
-        dA : post-activation gradient, of any shape
-        cache : 'Z' (for backpropagation)
-    
-        Returns
-        -------
-        dZ : Gradient of the cost with respect to Z
-        """
-        
-        Z = cache
-        dZ = np.array(dA, copy=True) # just converting dz to a correct object.
-        
-        # When z <= 0, we should set dz to 0 as well. 
-        dZ[Z <= 0] = 0
-        
-        assert (dZ.shape == Z.shape)
-        
-        return dZ
-    
-    @staticmethod
-    def tanh_backward(dA, cache):
-        """
-        Backward propagation for a single TANH unit.
-    
-        Parameters
-        ----------
-        dA : post-activation gradient, of any shape
-        cache : 'Z' (for backpropagation)
-    
-        Returns
-        -------
-        dZ : Gradient of the cost with respect to Z
-        """
-        Z = cache
-        A = np.tanh(Z)  # calculate the tanh of Z
-        dZ = dA * (1 - np.power(A, 2))  # derivative of tanh
-    
-        assert (dZ.shape == Z.shape)
-        
-        return dZ
->>>>>>> main
+from .activation import ActivationFunctions, BackwardActivation
 
 # ------------------------------------------------------------------------------
 # Error Calculations
@@ -313,15 +90,9 @@ class ModelParamInit:
         
         for l in range(1, L):
             parameters["W" + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1]) * 0.01
-<<<<<<< HEAD
             parameters["b" + str(l)] = np.random.randn((layer_dims[l], 1))
             
             assert(parameters["WS" + str(l)].shape == (layer_dims[l], layer_dims[l - 1]))
-=======
-            parameters["b" + str(l)] = np.random.randn(layer_dims[l], 1)
-            
-            assert(parameters["W" + str(l)].shape == (layer_dims[l], layer_dims[l - 1]))
->>>>>>> main
             assert(parameters["b" + str(l)].shape == (layer_dims[l], 1))
             
         return parameters
@@ -454,10 +225,6 @@ class ForwardProp:
             activation_function = activation[l-1]
             A, cache = ForwardProp.linear_activation_forward(A_prev, W, b, activation_function)
             caches.append(cache)
-<<<<<<< HEAD
-=======
-            
->>>>>>> main
             """
             # Diagnostic print statements
             print(f"Layer {l}:")
@@ -466,17 +233,9 @@ class ForwardProp:
             print(f"b.shape: {b.shape}")
             print(f"A.shape: {A.shape}\n")
             """
-<<<<<<< HEAD
         W, b = parameters["W" + str(L)], parameters["b" + str(L)]
         activation_function = activation[L-1]
         AL, cache = ForwardProp.linear_activation_forward(A, W, b, activation_function)
-=======
-
-        W, b = parameters["W" + str(L)], parameters["b" + str(L)]
-        activation_function = activation[L-1]
-        AL, cache = ForwardProp.linear_activation_forward(A, W, b, activation_function)
-
->>>>>>> main
         """
         # Additional diagnostic print for the last layer
         print(f"Layer {L}:")
@@ -595,11 +354,7 @@ class BackwardProp:
     The BackwardProp class facilitates the backward propagation process in neural networks, 
     handling gradient calculations essential for updating model parameters during training.
     """
-<<<<<<< HEAD
     @staticmethod
-=======
-    @staticmethod   
->>>>>>> main
     def linear_backward(dZ, cache):
         """
         Linear portion of backward propagation for a single layer (layer l)
@@ -668,13 +423,8 @@ class BackwardProp:
             dA_prev, dW, db = BackwardProp.linear_backward(dZ, linear_cache)
             
         return dA_prev, dW, db
-<<<<<<< HEAD
 
     @staticmethod
-=======
-    
-    @staticmethod     
->>>>>>> main
     def squared_error_gradient(Y, A):
         """
         Compute the gradient of the squared error
@@ -708,11 +458,7 @@ class BackwardProp:
         gradient = - (np.divide(Y, A) - np.divide(Y, A - 1))    
         return gradient
     
-<<<<<<< HEAD
     @staticmethod
-=======
-    @staticmethod     
->>>>>>> main
     def L_model_backward_classification(AL, Y, caches, activation):
         """
         Backward propagation for the [LINEAR->RELU] * (L-1) -> LINEAR -> SIGMOID, or TANH, or RELU
@@ -743,22 +489,14 @@ class BackwardProp:
         current_activation = activation[L-1]
         current_cache = caches[L-1]
         dAL = BackwardProp.cross_entropy_gradient(Y, AL)
-<<<<<<< HEAD
         dA_prev_temp, dW_temp, db_temp = BackwardProp.linear_activation_backward(dAL, current_cache, current_activation)
-=======
-        dA_prev_temp, dW_temp, db_temp = BackwardProp.linear_activation_backward(dAL, current_cache, current_activation)        
->>>>>>> main
         
         grads["dA"+str(L-1)] = dA_prev_temp
         grads["dW"+str(L)] = dW_temp
         grads["db"+str(L)] = db_temp
         
         for l in reversed(range(L-1)):
-<<<<<<< HEAD
             current_activation = activation[l-1]
-=======
-            current_activation = activation[l]
->>>>>>> main
             current_cache = caches[l]
             dA_prev_temp, dW_temp, db_temp = BackwardProp.linear_activation_backward(dA_prev_temp, current_cache, current_activation)
             grads["dA" + str(l)] = dA_prev_temp
@@ -766,13 +504,8 @@ class BackwardProp:
             grads["db" + str(l + 1)] = db_temp
             
         return grads
-<<<<<<< HEAD
     
     @staticmethod
-=======
-
-    @staticmethod    
->>>>>>> main
     def L_model_backward_regression(AL, Y, caches, activation):
         """
         Backward propagation for the [LINEAR->RELU] * (L-1) -> LINEAR -> LINEAR or TANH or RELU
@@ -854,11 +587,8 @@ def update_parameters(parameters, grads, learning_rate):
         parameters["b" + str(l + 1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
 
     return parameters
-<<<<<<< HEAD
  
 
-=======
->>>>>>> main
 
 
 

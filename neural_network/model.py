@@ -1,4 +1,4 @@
-from utils import ModelParamInit as MPI, ForwardProp as FP, CostFunction as CF, BackwardProp as BP, update_parameters as up
+from .utils import ModelParamInit as MPI, ForwardProp as FP, CostFunction as CF, BackwardProp as BP, update_parameters as up
 import numpy as np
 
 # ------------------------------------------------------------------------------

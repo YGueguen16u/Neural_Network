@@ -161,8 +161,6 @@ class BackwardActivation:
         dZ = np.array(dA, copy=True) # just converting dz to a correct object.
         print("dZ shape:", dZ.shape)
         print("Z shape:", Z.shape)
-        # When z <= 0, we should set dz to 0 as well. 
-        dZ[Z <= 0] = 0
         
         assert (dZ.shape == Z.shape)
         
@@ -206,15 +204,11 @@ class BackwardActivation:
         -------
         dZ : Gradient of the cost with respect to Z
         """
-        
         Z = cache
         dZ = np.array(dA, copy=True) # just converting dz to a correct object.
-        
-        # When z <= 0, we should set dz to 0 as well. 
-        dZ[Z <= 0] = 0
-        
+        # When z <= 0, we should set dz to 0 as well.
+        dZ[Z <= 0] = 0        
         assert (dZ.shape == Z.shape)
-        
         return dZ
     
     @staticmethod

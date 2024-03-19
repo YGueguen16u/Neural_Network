@@ -1,0 +1,25 @@
+Neural_Network_Package/
+│
+├── neural_network/  # Your package code
+│   ├── __init__.py  # Makes neural_network a Python package
+│   ├── activation.py
+│   ├── model.py
+│   └── utils.py
+│
+├── tests/  # Unit tests for your package
+│   ├── __init__.py
+│   ├── test_activation.py
+│   ├── test_model.py
+│   └── test_utils.py
+│
+├── data/  # Data for examples or testing
+│   └── ...
+│
+├── notebooks/  # Jupyter notebooks
+│   ├── Untitled.ipynb
+│   └── Untitled1.ipynb
+│
+├── .gitignore  # Specifies intentionally untracked files to ignore
+├── README.md  # Project description and instructions
+├── setup.py  # Setup script for installing the package
+└── requirements.txt  # The dependencies required for the package to run
